@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router";
-import LandingPage from "./LandingPage";
+import LandingPage from "@/pages/LandingPage"
+import NotFound from "@/pages/NotFound";
 
 export const router = createBrowserRouter([
     {
@@ -8,5 +9,6 @@ export const router = createBrowserRouter([
         children: [
             { index: true, Component: LandingPage },
             { path: "dashboard", Component: LandingPage },
+            { path: '*', Component: NotFound },
         ],
     }]);

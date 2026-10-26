@@ -6,12 +6,15 @@ import { router } from "./routes.ts";
 //import { AppProvider } from "./guards/AppContext.tsx";
 import "@mantine/core/styles.css";
 import "@mantine/tiptap/styles.css";
+import { AuthProvider } from "./context/AuthProvider.tsx";
 //import './index.css'
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <MantineProvider>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </MantineProvider>
   </StrictMode>,
 );
