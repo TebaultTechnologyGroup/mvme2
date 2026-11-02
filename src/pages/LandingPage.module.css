@@ -1,0 +1,101 @@
+.root {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #f9f9f9;
+}
+
+.brandPanel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 64px;
+  color: white;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a84ff 0%, #0066cc 100%);
+}
+
+.brandPanel::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.12) 1px,
+    transparent 1px
+  );
+  background-size: 40px 40px;
+  animation: float 20s linear infinite;
+}
+
+@keyframes float {
+  to {
+    transform: translate(40px, 40px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brandPanel::before {
+    animation: none;
+  }
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: white;
+}
+
+.description {
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.6;
+}
+
+.note {
+  color: rgba(255, 255, 255, 0.75);
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.formPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
+.loginCard {
+  background-color: white;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.button {
+  background-color: #f7b500;
+  color: #1a1a1a;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  background-color: #ffbb00;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 900px) {
+  .root {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .brandPanel {
+    padding: 40px 24px;
+  }
+
+  .title {
+    font-size: 2.25rem;
+  }
+}
