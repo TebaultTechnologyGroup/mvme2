@@ -6,3 +6,4 @@ export const supabase = createClient(
 );
 
 //npx supabase gen types typescript --project-id YOUR_REF > src/lib/database.types.ts.
+//npx supabase gen types typescript --local > ./src/lib/database.types.ts

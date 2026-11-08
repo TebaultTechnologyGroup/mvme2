@@ -1,0 +1,42 @@
+[
+    {
+        "expected": "string",
+        "code": "invalid_type",
+        "path": [
+            "experience",
+            0,
+            "description"
+        ],
+        "message": "Invalid input: expected string, received null"
+    },
+    {
+        "expected": "string",
+        "code": "invalid_type",
+        "path": [
+            "experience",
+            1,
+            "description"
+        ],
+        "message": "Invalid input: expected string, received null"
+    },
+    {
+        "expected": "string",
+        "code": "invalid_type",
+        "path": [
+            "experience",
+            2,
+            "description"
+        ],
+        "message": "Invalid input: expected string, received null"
+    },
+    {
+        "expected": "string",
+        "code": "invalid_type",
+        "path": [
+            "experience",
+            3,
+            "description"
+        ],
+        "message": "Invalid input: expected string, received null"
+    }
+]

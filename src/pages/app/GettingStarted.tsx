@@ -15,6 +15,7 @@ import {
 import { Upload, ArrowRight } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/context/AuthProvider";
+import { apiFetch } from "@/lib/apiClient";
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ACCEPTED_TYPES = [
@@ -63,20 +64,20 @@ export default function GettingStarted() {
       if (uploadError) throw uploadError;
 
       // Create the uploaded_resume record
-      // console.log("user_id:" + user.userId + " file_path:" + path);
-      // const { data: resume, error: insertError } = await supabase
-      //   .from("uploaded_resumes")
-      //   .insert({ user_id: user.userId, file_path: path, status: "pending" })
-      //   .select()
-      //   .single();
+      console.log("user_id:" + userId + " file_path:" + path);
+      const { data: resume, error: insertError } = await supabase
+        .from("uploaded_resumes")
+        .insert({ user_id: userId, file_path: path, status: "pending" })
+        .select()
+        .single();
 
-      // console.log(insertError);
-      // if (insertError) {
-      //   setLoading(false);
-      //   throw new Error(
-      //     "Error processing resume: " + JSON.stringify(insertError),
-      //   );
-      // }
+      console.log(insertError);
+      if (insertError) {
+        setLoading(false);
+        throw new Error(
+          "Error processing resume: " + JSON.stringify(insertError),
+        );
+      }
 
       interface RawResponse {
         situation?: string;
@@ -88,42 +89,24 @@ export default function GettingStarted() {
         follow_up?: string;
       }
 
-      // const result: any = await apiFetch<RawResponse>("/parse-resume", {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     resumeId: resume.id,
-      //   }),
-      // });
+      const result: any = await apiFetch<RawResponse>("/api/parse-resume", {
+        method: "POST",
+        body: JSON.stringify({
+          resumeId: resume.id,
+        }),
+      });
 
-      //   //TODO: Check result
-      //   console.log(JSON.stringify(result));
-      //   navigate("/app/resume-builder");
-      // } catch (error) {
-      //   setError(
-      //     error instanceof Error ? error.message : "Failed to parse the resume.",
-      //   );
+      //TODO: Check result
+      console.log(JSON.stringify(result));
+      navigate("/app/resume-builder");
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "Failed to parse the resume.",
+      );
     } finally {
       setLoading(false);
     }
   }
-
-  // const handleContinue = async () => {
-  //   if (!file) return;
-  //   setLoading(true);
-  //   setError(null);
-  //   try {
-  //     const parsed = await parseResume(file);
-  //     // TODO: persist parsed resume (e.g. to Supabase) before navigating.
-  //     void parsed;
-  //     navigate("/app/resume-builder");
-  //   } catch (err) {
-  //     setError(
-  //       err instanceof Error ? err.message : "Failed to parse the resume.",
-  //     );
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const handleSkip = () => {
     navigate("/app/resume-builder");
