@@ -47,6 +47,11 @@ export function useResumeData(resumeId: string | null): UseResumeDataResult {
           id: data.id,
           userId: data.user_id,
           title: data.title,
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          location: data.location,
+          summary: data.summary,
           workExperience: data.work_experience || [],
           education: data.education || [],
           skills: data.skills || [],
@@ -69,6 +74,12 @@ export function useResumeData(resumeId: string | null): UseResumeDataResult {
       const { error: updateError } = await supabase
         .from('master_resumes')
         .update({
+          title: updatedResume.title,
+          name: updatedResume.name,
+          email: updatedResume.email,
+          phone: updatedResume.phone,
+          location: updatedResume.location,
+          summary: updatedResume.summary,
           work_experience: updatedResume.workExperience,
           education: updatedResume.education,
           skills: updatedResume.skills,

@@ -25,14 +25,14 @@ export type Database = {
           Tables: {
             "master_resumes": {
                   Row: {
-                    "created_at": string | null,"education": Json | null,"id": string,"projects": Json | null,"skills": Json | null,"title": string | null,"updated_at": string | null,"user_id": string,"work_experience": Json | null
+                    "created_at": string | null,"education": Json | null,"email": string | null,"id": string,"location": string | null,"name": string | null,"phone": string | null,"projects": Json | null,"skills": Json | null,"summary": string | null,"title": string | null,"updated_at": string | null,"user_id": string,"work_experience": Json | null
                   }
                   ComputedFields: never
                   Insert: {
-                    "created_at"?: string | null,"education"?: Json | null,"id"?: string,"projects"?: Json | null,"skills"?: Json | null,"title"?: string | null,"updated_at"?: string | null,"user_id": string,"work_experience"?: Json | null
+                    "created_at"?: string | null,"education"?: Json | null,"email"?: string | null,"id"?: string,"location"?: string | null,"name"?: string | null,"phone"?: string | null,"projects"?: Json | null,"skills"?: Json | null,"summary"?: string | null,"title"?: string | null,"updated_at"?: string | null,"user_id": string,"work_experience"?: Json | null
                   }
                   Update: {
-                    "created_at"?: string | null,"education"?: Json | null,"id"?: string,"projects"?: Json | null,"skills"?: Json | null,"title"?: string | null,"updated_at"?: string | null,"user_id"?: string,"work_experience"?: Json | null
+                    "created_at"?: string | null,"education"?: Json | null,"email"?: string | null,"id"?: string,"location"?: string | null,"name"?: string | null,"phone"?: string | null,"projects"?: Json | null,"skills"?: Json | null,"summary"?: string | null,"title"?: string | null,"updated_at"?: string | null,"user_id"?: string,"work_experience"?: Json | null
                   }
                   Relationships: [
                     {

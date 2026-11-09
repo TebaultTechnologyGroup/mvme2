@@ -40,6 +40,11 @@ export interface MasterResume {
   id: string;
   userId: string;
   title: string;
+  name?: string;
+  email?: string;
+  phone?: string;
+  location?: string;
+  summary?: string;
   workExperience: WorkExperience[];
   education: Education[];
   skills: Skill[];

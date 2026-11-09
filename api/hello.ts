@@ -1,6 +1,5 @@
+/*
 import { z } from 'zod';
-
-
 // Define the Resume Schema
 // Define the Resume Schema
 const ResumeSchema = z.object({
@@ -38,12 +37,11 @@ const ResumeSchema = z.object({
     ).default([]),
 });
 
-type Resume = z.infer<typeof ResumeSchema>;
-
-
+type _Resume = z.infer<typeof ResumeSchema>;
+*/
 
 export default async function handler(
-    req: { method?: string; body?: any, headers?: any },
+    req: { method?: string; body?: any; headers?: any },
     res: { status: (code: number) => { json: (data: any) => any } }
 ) {
     if (req.method !== "GET") {
@@ -52,6 +50,7 @@ export default async function handler(
         });
     }
 
+    /*
     const resume = {
         "name": "Mark Tebault",
         "email": "mark_tebault@bellsouth.net",
@@ -133,6 +132,7 @@ export default async function handler(
         "projects": []
     };
 
+    /*
     try {
         const validated = ResumeSchema.parse(resume);
 
@@ -143,5 +143,6 @@ export default async function handler(
         return res.status(200).json(error);
 
     }
-
+    */
+    return res.status(200).json({ ok: true });
 }

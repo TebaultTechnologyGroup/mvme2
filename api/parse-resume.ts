@@ -250,6 +250,11 @@ async function saveResults(_resumeId: string, userId: string, r: Resume) {
         .insert({
             user_id: userId,
             title: 'Master Resume',
+            name: r.name || undefined,
+            email: r.email || undefined,
+            phone: r.phone || undefined,
+            location: r.location || undefined,
+            summary: r.summary || undefined,
             work_experience: workExperience,
             education: education,
             skills: skills,

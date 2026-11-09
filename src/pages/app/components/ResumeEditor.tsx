@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Stack,
   Tabs,
@@ -14,15 +14,24 @@ import {
   Box,
   Text,
   SimpleGrid,
-} from '@mantine/core';
-import { Trash2, Plus, Edit2 } from 'lucide-react';
-import type { MasterResume, WorkExperience, Education, Skill, Project } from '@/types/resume';
+} from "@mantine/core";
+import { Trash2, Plus, Edit2 } from "lucide-react";
+import type {
+  MasterResume,
+  WorkExperience,
+  Education,
+  Skill,
+  Project,
+} from "@/types/resume";
 
 interface ResumeEditorProps {
   resume: MasterResume | null;
   onSave: (resume: MasterResume) => Promise<void>;
   onAddWorkExperience: (experience: WorkExperience) => void;
-  onUpdateWorkExperience: (id: string, experience: Partial<WorkExperience>) => void;
+  onUpdateWorkExperience: (
+    id: string,
+    experience: Partial<WorkExperience>,
+  ) => void;
   onDeleteWorkExperience: (id: string) => void;
   onAddEducation: (education: Education) => void;
   onUpdateEducation: (id: string, education: Partial<Education>) => void;
@@ -53,8 +62,12 @@ export default function ResumeEditor({
   onDeleteProject,
   saving = false,
 }: ResumeEditorProps) {
-  const [editingWorkExperienceId, setEditingWorkExperienceId] = useState<string | null>(null);
-  const [editingEducationId, setEditingEducationId] = useState<string | null>(null);
+  const [editingWorkExperienceId, setEditingWorkExperienceId] = useState<
+    string | null
+  >(null);
+  const [editingEducationId, setEditingEducationId] = useState<string | null>(
+    null,
+  );
   const [editingSkillId, setEditingSkillId] = useState<string | null>(null);
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
 
@@ -63,7 +76,9 @@ export default function ResumeEditor({
   const [skillModal, setSkillModal] = useState(false);
   const [projectModal, setProjectModal] = useState(false);
 
-  const [newWorkExperience, setNewWorkExperience] = useState<Partial<WorkExperience>>({});
+  const [newWorkExperience, setNewWorkExperience] = useState<
+    Partial<WorkExperience>
+  >({});
   const [newEducation, setNewEducation] = useState<Partial<Education>>({});
   const [newSkill, setNewSkill] = useState<Partial<Skill>>({});
   const [newProject, setNewProject] = useState<Partial<Project>>({});
@@ -74,7 +89,7 @@ export default function ResumeEditor({
 
   const handleSaveWorkExperience = async () => {
     if (!newWorkExperience.company || !newWorkExperience.title) {
-      alert('Please fill in required fields');
+      alert("Please fill in required fields");
       return;
     }
 
@@ -86,7 +101,7 @@ export default function ResumeEditor({
         id,
         company: newWorkExperience.company!,
         title: newWorkExperience.title!,
-        description: newWorkExperience.description || '',
+        description: newWorkExperience.description || "",
         startDate: newWorkExperience.startDate || null,
         endDate: newWorkExperience.endDate || null,
         currentlyWorking: newWorkExperience.currentlyWorking || false,
@@ -101,7 +116,7 @@ export default function ResumeEditor({
 
   const handleSaveEducation = async () => {
     if (!newEducation.school) {
-      alert('Please fill in required fields');
+      alert("Please fill in required fields");
       return;
     }
 
@@ -126,7 +141,7 @@ export default function ResumeEditor({
 
   const handleSaveSkill = async () => {
     if (!newSkill.name) {
-      alert('Please enter a skill name');
+      alert("Please enter a skill name");
       return;
     }
 
@@ -138,7 +153,7 @@ export default function ResumeEditor({
         id,
         name: newSkill.name!,
         category: newSkill.category || undefined,
-        proficiencyLevel: newSkill.proficiencyLevel as any || undefined,
+        proficiencyLevel: (newSkill.proficiencyLevel as any) || undefined,
       });
     }
 
@@ -150,7 +165,7 @@ export default function ResumeEditor({
 
   const handleSaveProject = async () => {
     if (!newProject.title || !newProject.description) {
-      alert('Please fill in required fields');
+      alert("Please fill in required fields");
       return;
     }
 
@@ -177,13 +192,67 @@ export default function ResumeEditor({
 
   return (
     <Box>
-      <Tabs defaultValue="experience" variant="outline">
+      <Tabs defaultValue="personal" variant="outline">
         <Tabs.List>
+          <Tabs.Tab value="personal">Personal Info</Tabs.Tab>
           <Tabs.Tab value="experience">Work Experience</Tabs.Tab>
           <Tabs.Tab value="education">Education</Tabs.Tab>
           <Tabs.Tab value="skills">Skills</Tabs.Tab>
           <Tabs.Tab value="projects">Projects</Tabs.Tab>
         </Tabs.List>
+
+        <Tabs.Panel value="personal" pt="md">
+          <Stack gap="md" maw={600}>
+            <TextInput
+              label="Full Name"
+              placeholder="Your full name"
+              value={resume.title || ''}
+              onChange={(e) => {
+                const updated = { ...resume, title: e.currentTarget.value };
+                onSave(updated);
+              }}
+            />
+            <TextInput
+              label="Email"
+              placeholder="your.email@example.com"
+              type="email"
+              value={(resume as any).email || ''}
+              onChange={(e) => {
+                const updated = { ...resume, email: e.currentTarget.value } as any;
+                onSave(updated);
+              }}
+            />
+            <TextInput
+              label="Phone"
+              placeholder="(555) 555-5555"
+              value={(resume as any).phone || ''}
+              onChange={(e) => {
+                const updated = { ...resume, phone: e.currentTarget.value } as any;
+                onSave(updated);
+              }}
+            />
+            <TextInput
+              label="Location"
+              placeholder="City, State"
+              value={(resume as any).location || ''}
+              onChange={(e) => {
+                const updated = { ...resume, location: e.currentTarget.value } as any;
+                onSave(updated);
+              }}
+            />
+            <Textarea
+              label="Professional Summary"
+              placeholder="Brief overview of your professional background and expertise"
+              value={(resume as any).summary || ''}
+              onChange={(e) => {
+                const updated = { ...resume, summary: e.currentTarget.value } as any;
+                onSave(updated);
+              }}
+              rows={5}
+              autoFocus
+            />
+          </Stack>
+        </Tabs.Panel>
 
         <Tabs.Panel value="experience" pt="md">
           <Stack gap="md">
@@ -234,23 +303,26 @@ export default function ResumeEditor({
                       </ActionIcon>
                     </Group>
                   </Group>
-                   <Text size="sm" c="dimmed" mb="sm">
-                    {exp.startDate} – {exp.currentlyWorking ? 'Present' : exp.endDate}
-                   </Text>
-                   <Text size="sm" mb="sm">{exp.description}</Text>
-                   {exp.achievements && exp.achievements.length > 0 && (
-                     <Stack gap="xs">
-                       <Text size="xs" fw={500} c="dimmed">
-                         Key Achievements:
-                       </Text>
-                       {exp.achievements.map((achievement, idx) => (
-                         <Text key={idx} size="xs">
-                           • {achievement}
-                         </Text>
-                       ))}
-                     </Stack>
-                   )}
-                 </Card>
+                  <Text size="sm" c="dimmed" mb="sm">
+                    {exp.startDate} –{" "}
+                    {exp.currentlyWorking ? "Present" : exp.endDate}
+                  </Text>
+                  <Text size="sm" mb="sm">
+                    {exp.description}
+                  </Text>
+                  {exp.achievements && exp.achievements.length > 0 && (
+                    <Stack gap="xs">
+                      <Text size="xs" fw={500} c="dimmed">
+                        Key Achievements:
+                      </Text>
+                      {exp.achievements.map((achievement, idx) => (
+                        <Text key={idx} size="xs">
+                          • {achievement}
+                        </Text>
+                      ))}
+                    </Stack>
+                  )}
+                </Card>
               ))
             )}
           </Stack>
@@ -303,7 +375,11 @@ export default function ResumeEditor({
                       </ActionIcon>
                     </Group>
                   </Group>
-                  {edu.year && <Text size="sm" c="dimmed">{edu.year}</Text>}
+                  {edu.year && (
+                    <Text size="sm" c="dimmed">
+                      {edu.year}
+                    </Text>
+                  )}
                 </Card>
               ))
             )}
@@ -429,62 +505,77 @@ export default function ResumeEditor({
           setEditingWorkExperienceId(null);
           setNewWorkExperience({});
         }}
-        title={editingWorkExperienceId ? 'Edit Experience' : 'Add Experience'}
+        title={editingWorkExperienceId ? "Edit Experience" : "Add Experience"}
       >
         <Stack gap="md">
           <TextInput
             label="Company"
             placeholder="Company name"
-            value={(newWorkExperience.company as string) || ''}
+            value={(newWorkExperience.company as string) || ""}
             onChange={(e) =>
-              setNewWorkExperience({ ...newWorkExperience, company: e.currentTarget.value })
+              setNewWorkExperience({
+                ...newWorkExperience,
+                company: e.currentTarget.value,
+              })
             }
             required
           />
           <TextInput
             label="Job Title"
             placeholder="e.g., Senior Developer"
-            value={(newWorkExperience.title as string) || ''}
+            value={(newWorkExperience.title as string) || ""}
             onChange={(e) =>
-              setNewWorkExperience({ ...newWorkExperience, title: e.currentTarget.value })
+              setNewWorkExperience({
+                ...newWorkExperience,
+                title: e.currentTarget.value,
+              })
             }
             required
           />
           <TextInput
             label="Start Date"
             placeholder="MM/YYYY"
-            value={(newWorkExperience.startDate as string) || ''}
+            value={(newWorkExperience.startDate as string) || ""}
             onChange={(e) =>
-              setNewWorkExperience({ ...newWorkExperience, startDate: e.currentTarget.value })
+              setNewWorkExperience({
+                ...newWorkExperience,
+                startDate: e.currentTarget.value,
+              })
             }
           />
           <TextInput
             label="End Date"
             placeholder="MM/YYYY"
-            value={(newWorkExperience.endDate as string) || ''}
+            value={(newWorkExperience.endDate as string) || ""}
             onChange={(e) =>
-              setNewWorkExperience({ ...newWorkExperience, endDate: e.currentTarget.value })
+              setNewWorkExperience({
+                ...newWorkExperience,
+                endDate: e.currentTarget.value,
+              })
             }
             disabled={newWorkExperience.currentlyWorking}
           />
           <Textarea
             label="Description"
             placeholder="Describe your responsibilities and achievements"
-            value={(newWorkExperience.description as string) || ''}
+            value={(newWorkExperience.description as string) || ""}
             onChange={(e) =>
-              setNewWorkExperience({ ...newWorkExperience, description: e.currentTarget.value })
+              setNewWorkExperience({
+                ...newWorkExperience,
+                description: e.currentTarget.value,
+              })
             }
             rows={4}
           />
           <Textarea
             label="Key Achievements (one per line, optional)"
             placeholder="e.g., Increased sales by 50%&#10;Led team of 5 engineers&#10;Reduced page load time by 40%"
-            value={((newWorkExperience.achievements as any) || []).join('\n')}
+            value={((newWorkExperience.achievements as any) || []).join("\n")}
             onChange={(e) =>
               setNewWorkExperience({
                 ...newWorkExperience,
                 achievements: e.currentTarget.value
-                  .split('\n')
+                  .split("\n")
                   .map((a) => a.trim())
                   .filter((a) => a.length > 0),
               })
@@ -517,39 +608,50 @@ export default function ResumeEditor({
           setEditingEducationId(null);
           setNewEducation({});
         }}
-        title={editingEducationId ? 'Edit Education' : 'Add Education'}
+        title={editingEducationId ? "Edit Education" : "Add Education"}
       >
         <Stack gap="md">
           <TextInput
             label="School"
             placeholder="University/School name"
-            value={(newEducation.school as string) || ''}
+            value={(newEducation.school as string) || ""}
             onChange={(e) =>
-              setNewEducation({ ...newEducation, school: e.currentTarget.value })
+              setNewEducation({
+                ...newEducation,
+                school: e.currentTarget.value,
+              })
             }
             required
           />
           <TextInput
             label="Degree"
             placeholder="e.g., Bachelor of Science"
-            value={(newEducation.degree as string) || ''}
+            value={(newEducation.degree as string) || ""}
             onChange={(e) =>
-              setNewEducation({ ...newEducation, degree: e.currentTarget.value })
+              setNewEducation({
+                ...newEducation,
+                degree: e.currentTarget.value,
+              })
             }
           />
           <TextInput
             label="Field of Study"
             placeholder="e.g., Computer Science"
-            value={(newEducation.fieldOfStudy as string) || ''}
+            value={(newEducation.fieldOfStudy as string) || ""}
             onChange={(e) =>
-              setNewEducation({ ...newEducation, fieldOfStudy: e.currentTarget.value })
+              setNewEducation({
+                ...newEducation,
+                fieldOfStudy: e.currentTarget.value,
+              })
             }
           />
           <TextInput
             label="Year"
             placeholder="YYYY"
-            value={(newEducation.year as string) || ''}
-            onChange={(e) => setNewEducation({ ...newEducation, year: e.currentTarget.value })}
+            value={(newEducation.year as string) || ""}
+            onChange={(e) =>
+              setNewEducation({ ...newEducation, year: e.currentTarget.value })
+            }
           />
           <Group justify="flex-end" pt="md">
             <Button
@@ -577,27 +679,31 @@ export default function ResumeEditor({
           setEditingSkillId(null);
           setNewSkill({});
         }}
-        title={editingSkillId ? 'Edit Skill' : 'Add Skill'}
+        title={editingSkillId ? "Edit Skill" : "Add Skill"}
       >
         <Stack gap="md">
           <TextInput
             label="Skill Name"
             placeholder="e.g., React, Python, Project Management"
-            value={(newSkill.name as string) || ''}
-            onChange={(e) => setNewSkill({ ...newSkill, name: e.currentTarget.value })}
+            value={(newSkill.name as string) || ""}
+            onChange={(e) =>
+              setNewSkill({ ...newSkill, name: e.currentTarget.value })
+            }
             required
           />
           <TextInput
             label="Category"
             placeholder="e.g., Technical, Leadership, Tools"
-            value={(newSkill.category as string) || ''}
-            onChange={(e) => setNewSkill({ ...newSkill, category: e.currentTarget.value })}
+            value={(newSkill.category as string) || ""}
+            onChange={(e) =>
+              setNewSkill({ ...newSkill, category: e.currentTarget.value })
+            }
           />
           <Select
             label="Proficiency Level"
             placeholder="Select proficiency level"
-            data={['Beginner', 'Intermediate', 'Advanced', 'Expert']}
-            value={(newSkill.proficiencyLevel as string) || ''}
+            data={["Beginner", "Intermediate", "Advanced", "Expert"]}
+            value={(newSkill.proficiencyLevel as string) || ""}
             onChange={(value) =>
               setNewSkill({ ...newSkill, proficiencyLevel: value as any })
             }
@@ -628,22 +734,27 @@ export default function ResumeEditor({
           setEditingProjectId(null);
           setNewProject({});
         }}
-        title={editingProjectId ? 'Edit Project' : 'Add Project'}
+        title={editingProjectId ? "Edit Project" : "Add Project"}
       >
         <Stack gap="md">
           <TextInput
             label="Project Title"
             placeholder="Project name"
-            value={(newProject.title as string) || ''}
-            onChange={(e) => setNewProject({ ...newProject, title: e.currentTarget.value })}
+            value={(newProject.title as string) || ""}
+            onChange={(e) =>
+              setNewProject({ ...newProject, title: e.currentTarget.value })
+            }
             required
           />
           <Textarea
             label="Description"
             placeholder="Describe your project"
-            value={(newProject.description as string) || ''}
+            value={(newProject.description as string) || ""}
             onChange={(e) =>
-              setNewProject({ ...newProject, description: e.currentTarget.value })
+              setNewProject({
+                ...newProject,
+                description: e.currentTarget.value,
+              })
             }
             rows={4}
             required
@@ -651,19 +762,23 @@ export default function ResumeEditor({
           <TextInput
             label="Technologies (comma-separated)"
             placeholder="React, Node.js, MongoDB"
-            value={(newProject.technologies as any)?.join(', ') || ''}
+            value={(newProject.technologies as any)?.join(", ") || ""}
             onChange={(e) =>
               setNewProject({
                 ...newProject,
-                technologies: e.currentTarget.value.split(',').map((t) => t.trim()),
+                technologies: e.currentTarget.value
+                  .split(",")
+                  .map((t) => t.trim()),
               })
             }
           />
           <TextInput
             label="Project URL"
             placeholder="https://example.com"
-            value={(newProject.url as string) || ''}
-            onChange={(e) => setNewProject({ ...newProject, url: e.currentTarget.value })}
+            value={(newProject.url as string) || ""}
+            onChange={(e) =>
+              setNewProject({ ...newProject, url: e.currentTarget.value })
+            }
           />
           <Group justify="flex-end" pt="md">
             <Button

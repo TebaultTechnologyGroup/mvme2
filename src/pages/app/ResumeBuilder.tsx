@@ -82,6 +82,11 @@ export default function ResumeBuilder() {
           id: r.id,
           userId: r.user_id,
           title: r.title,
+          name: r.name,
+          email: r.email,
+          phone: r.phone,
+          location: r.location,
+          summary: r.summary,
           workExperience: r.work_experience || [],
           education: r.education || [],
           skills: r.skills || [],
@@ -371,9 +376,30 @@ export default function ResumeBuilder() {
                   <Box p="lg" bg="gray.1" style={{ minHeight: '600px', borderRadius: '8px' }}>
                     <Stack gap="md" maw="800px" mx="auto">
                       <div style={{ backgroundColor: 'white', padding: '32px', borderRadius: '8px' }}>
-                        <Title order={1} mb="xs">
-                          {resume.title}
-                        </Title>
+                        {resume.name && (
+                          <Title order={1} mb="xs">
+                            {resume.name}
+                          </Title>
+                        )}
+                        {!resume.name && (
+                          <Title order={1} mb="xs">
+                            {resume.title}
+                          </Title>
+                        )}
+
+                        {(resume.email || resume.phone || resume.location) && (
+                          <Group gap="md" mb="md" style={{ fontSize: '13px' }}>
+                            {resume.email && <Text>{resume.email}</Text>}
+                            {resume.phone && <Text>{resume.phone}</Text>}
+                            {resume.location && <Text>{resume.location}</Text>}
+                          </Group>
+                        )}
+
+                        {resume.summary && (
+                          <Text size="sm" mb="lg" style={{ fontStyle: 'italic', color: '#666' }}>
+                            {resume.summary}
+                          </Text>
+                        )}
 
                         {resume.workExperience.length > 0 && (
                           <>
